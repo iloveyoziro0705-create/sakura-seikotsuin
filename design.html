@@ -746,158 +746,6 @@
 
 
 <!-- ══════════════════════════
-  料金シミュレーター
-══════════════════════════ -->
-<section id="simulator" class="py-20 sm:py-28 bg-white">
-  <div class="max-w-4xl mx-auto px-5 sm:px-8 lg:px-10">
-
-    <div class="text-center mb-12 reveal">
-      <span class="sec-en">Simulator</span>
-      <h2 class="sec-ja">料金シミュレーター</h2>
-      <div class="sec-rule mx-auto"></div>
-      <p class="text-sk-muted mt-4 text-sm sm:text-base max-w-md mx-auto" style="text-wrap:pretty;">
-        症状・保険の種類・通院頻度を選ぶだけで、料金の目安をリアルタイムで確認できます。
-      </p>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 reveal">
-
-      <!-- ── 入力パネル ── -->
-      <div class="card space-y-6">
-
-        <!-- STEP 1: 症状 -->
-        <div>
-          <p class="font-bold text-sk-text text-sm mb-1 flex items-center gap-2">
-            <span class="w-5 h-5 rounded-full bg-sk-green text-white text-[10px] font-black flex items-center justify-center flex-shrink-0">1</span>
-            症状を選んでください
-            <span class="text-sk-muted font-normal text-[11px]">（複数選択可）</span>
-          </p>
-          <p class="text-sk-light text-[11px] mb-3 pl-7">当てはまる症状をすべて選んでください</p>
-          <div class="flex flex-wrap gap-2 pl-7">
-            <label class="sim-chip"><input type="checkbox" name="symptom" value="neck"><span>首の痛み</span></label>
-            <label class="sim-chip"><input type="checkbox" name="symptom" value="back"><span>腰痛</span></label>
-            <label class="sim-chip"><input type="checkbox" name="symptom" value="shoulder"><span>肩こり</span></label>
-            <label class="sim-chip"><input type="checkbox" name="symptom" value="headache"><span>頭痛</span></label>
-            <label class="sim-chip"><input type="checkbox" name="symptom" value="numbness"><span>しびれ</span></label>
-          </div>
-        </div>
-
-        <div class="border-t border-sk-border"></div>
-
-        <!-- STEP 2: 保険 -->
-        <div>
-          <p class="font-bold text-sk-text text-sm mb-3 flex items-center gap-2">
-            <span class="w-5 h-5 rounded-full bg-sk-green text-white text-[10px] font-black flex items-center justify-center flex-shrink-0">2</span>
-            保険の種類
-          </p>
-          <div class="grid grid-cols-3 gap-2 pl-7">
-            <label class="sim-radio">
-              <input type="radio" name="insurance" value="jibaiseki" checked>
-              <span>自賠責保険</span>
-            </label>
-            <label class="sim-radio">
-              <input type="radio" name="insurance" value="health">
-              <span>健康保険</span>
-            </label>
-            <label class="sim-radio">
-              <input type="radio" name="insurance" value="self">
-              <span>自費</span>
-            </label>
-          </div>
-        </div>
-
-        <div class="border-t border-sk-border"></div>
-
-        <!-- STEP 3: 通院頻度 -->
-        <div>
-          <p class="font-bold text-sk-text text-sm mb-3 flex items-center gap-2">
-            <span class="w-5 h-5 rounded-full bg-sk-green text-white text-[10px] font-black flex items-center justify-center flex-shrink-0">3</span>
-            希望する通院頻度
-          </p>
-          <div class="grid grid-cols-3 gap-2 pl-7">
-            <label class="sim-radio">
-              <input type="radio" name="frequency" value="week1">
-              <span>週1回</span>
-            </label>
-            <label class="sim-radio">
-              <input type="radio" name="frequency" value="week2" checked>
-              <span>週2回</span>
-            </label>
-            <label class="sim-radio">
-              <input type="radio" name="frequency" value="week3">
-              <span>週3回</span>
-            </label>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- ── 結果パネル ── -->
-      <div class="flex flex-col gap-4">
-
-        <!-- 自賠責0円強調ボックス（自賠責選択時のみ表示） -->
-        <div id="sim-zero-box" class="zero-box px-6 py-5">
-          <p class="font-black text-sk-y-txt text-sm mb-1">🚗 自賠責保険適用の場合</p>
-          <p class="font-black text-sk-green leading-none" style="font-size:2.8rem;">
-            自己負担<span style="font-size:3.5rem;">0</span><span style="font-size:1.8rem;">円</span>
-          </p>
-          <p class="text-sk-y-txt text-xs mt-1" style="opacity:.75;">費用のご心配なく通院いただけます</p>
-        </div>
-
-        <!-- 料金結果カード -->
-        <div class="card flex-1">
-          <div class="flex items-center gap-2 mb-5">
-            <div class="w-1 h-5 bg-sk-green rounded-full"></div>
-            <p class="font-bold text-sk-text text-sm">シミュレーション結果</p>
-          </div>
-
-          <div class="divide-y divide-sk-border">
-            <!-- 1回あたり -->
-            <div class="flex items-center justify-between py-4">
-              <div>
-                <p class="text-sk-muted text-[12.5px]">1回あたりの施術料金</p>
-                <p class="text-sk-light text-[10.5px]">目安金額（税込）</p>
-              </div>
-              <p class="sim-num text-[1.6rem]" id="sim-per-session">¥3,500</p>
-            </div>
-            <!-- 月額 -->
-            <div class="flex items-center justify-between py-4">
-              <div>
-                <p class="text-sk-muted text-[12.5px]">月額の目安金額</p>
-                <p class="text-sk-light text-[10.5px]" id="sim-visits-label">週2回（月8回）</p>
-              </div>
-              <p class="sim-num text-[1.6rem]" id="sim-monthly">¥28,000</p>
-            </div>
-            <!-- 自己負担 -->
-            <div class="flex items-center justify-between pt-4 pb-1">
-              <div>
-                <p class="font-bold text-sk-text text-[13px]">自己負担額（保険適用後）</p>
-                <p class="text-sk-light text-[10.5px]" id="sim-insurance-label">自賠責保険（自己負担なし）</p>
-              </div>
-              <p class="sim-num text-[2rem]" id="sim-copay">¥0</p>
-            </div>
-          </div>
-
-          <p class="text-sk-light text-[10.5px] leading-[1.8] mt-4" style="text-wrap:pretty;">
-            ※ 症状や施術内容により実際の料金は異なります。<br>詳しくは無料相談にてご案内いたします。
-          </p>
-        </div>
-
-        <!-- CTA -->
-        <a href="tel:0612345678" class="btn-primary w-full justify-center text-base" style="min-height:54px;">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-          </svg>
-          無料相談はこちら
-        </a>
-
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ══════════════════════════
   6. 患者様の声
 ══════════════════════════ -->
 <section id="reviews" class="py-20 sm:py-28 bg-white">
@@ -1163,60 +1011,6 @@
 </section>
 
 
-<!-- ══════════════════════════
-  オンライン予約（STORES予約）
-══════════════════════════ -->
-<section id="reserve" class="py-20 sm:py-28 bg-white">
-  <div class="max-w-3xl mx-auto px-5 sm:px-8 lg:px-10">
-
-    <div class="text-center mb-10 reveal">
-      <span class="sec-en">Online Reservation</span>
-      <h2 class="sec-ja">オンライン予約</h2>
-      <div class="sec-rule mx-auto"></div>
-      <p class="text-sk-muted mt-4 text-sm sm:text-base max-w-md mx-auto" style="text-wrap:pretty;">
-        STORES予約から24時間いつでもご予約いただけます。<br>
-        初めてのご来院の方もお気軽にどうぞ。
-      </p>
-    </div>
-
-    <!-- STORES予約 埋め込みエリア -->
-    <div class="reveal card overflow-hidden p-0">
-
-      <!--
-        ▼▼▼ STORES予約 埋め込みコード ▼▼▼
-        STORES予約ダッシュボード →「予約ページの設定」→「ウィジェット設定」で
-        取得したコードをこのコメントの下に貼り付け、
-        下のプレースホルダー div を削除してください。
-      -->
-
-      <!-- プレースホルダー（埋め込みコード設置後に削除） -->
-      <div class="flex flex-col items-center justify-center py-20 px-8 text-center gap-5" style="border:2px dashed #dde8e2;">
-        <div class="w-16 h-16 rounded-full bg-sk-g-lt flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-sk-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-          </svg>
-        </div>
-        <p class="font-bold text-sk-text text-[16px]">STORES予約 ウィジェット</p>
-        <p class="text-sk-muted text-[13px] leading-[2] max-w-sm">
-          STORES予約のダッシュボードから取得した<br>埋め込みコードをここに貼り付けてください。
-        </p>
-        <div class="px-5 py-3 rounded-xl text-[12px] text-sk-sub leading-[2] text-left bg-sk-g-lt border border-sk-border">
-          <span class="font-bold text-sk-green text-[10px] tracking-widest uppercase block mb-1">手順</span>
-          ① STORES予約にログイン<br>
-          ② 予約ページの設定 → ウィジェット設定<br>
-          ③ 「ウェブサイトに埋め込む」のコードをコピー<br>
-          ④ このプレースホルダーと差し替え
-        </div>
-      </div>
-      <!-- /プレースホルダー -->
-
-      <!--
-        ▲▲▲ ここまで ▲▲▲
-      -->
-
-    </div>
-  </div>
-</section>
 
 
 <!-- ══════════════════════════
@@ -1285,11 +1079,9 @@
         <a href="#reasons"  class="hover:text-white/60 transition-colors">選ばれる理由</a>
         <a href="#flow"     class="hover:text-white/60 transition-colors">施術の流れ</a>
         <a href="#price"     class="hover:text-white/60 transition-colors">料金</a>
-        <a href="#simulator" class="hover:text-white/60 transition-colors">料金シミュレーター</a>
         <a href="#reviews"  class="hover:text-white/60 transition-colors">患者様の声</a>
         <a href="#faq"      class="hover:text-white/60 transition-colors">よくある質問</a>
         <a href="#access"   class="hover:text-white/60 transition-colors">アクセス</a>
-        <a href="#reserve"  class="hover:text-white/60 transition-colors">オンライン予約</a>
       </nav>
     </div>
     <div class="border-t border-white/8 pt-6 text-center">
@@ -1325,76 +1117,6 @@
   document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.js-line-btn').forEach(el => { el.href = LINE_URL; });
   });
-
-  // ── 料金シミュレーター ──
-  (function () {
-    const BASE_PRICE  = { 0: 3500, 1: 3500, 2: 4500, 3: 5500 };
-    const VISITS      = { week1: 4, week2: 8, week3: 12 };
-    const VISIT_LABEL = { week1: '週1回（月4回）', week2: '週2回（月8回）', week3: '週3回（月12回）' };
-    const INS_LABEL   = {
-      jibaiseki: '自賠責保険（自己負担なし）',
-      health:    '健康保険（3割負担）',
-      self:      '自費（全額負担）',
-    };
-    const COPAY_RATE  = { jibaiseki: 0, health: 0.3, self: 1.0 };
-
-    const fmt = n => '¥' + n.toLocaleString('ja-JP');
-
-    function getVal(name) {
-      const el = document.querySelector('input[name="' + name + '"]:checked');
-      return el ? el.value : '';
-    }
-    function getCount() {
-      return document.querySelectorAll('input[name="symptom"]:checked').length;
-    }
-    function hasNumbness() {
-      const el = document.querySelector('input[name="symptom"][value="numbness"]');
-      return el && el.checked;
-    }
-
-    function calcBase(count) {
-      if (hasNumbness() && count >= 3) return 6500;
-      if (hasNumbness() || count >= 3) return 5500;
-      return BASE_PRICE[count] || 3500;
-    }
-
-    function flash(id, text) {
-      const el = document.getElementById(id);
-      if (!el) return;
-      el.textContent = text;
-      el.classList.remove('sim-fade');
-      void el.offsetWidth;
-      el.classList.add('sim-fade');
-    }
-
-    function update() {
-      const count     = getCount();
-      const insurance = getVal('insurance') || 'jibaiseki';
-      const frequency = getVal('frequency') || 'week2';
-      const base      = calcBase(count);
-      const visits    = VISITS[frequency];
-      const monthly   = base * visits;
-      const copay     = Math.round(monthly * COPAY_RATE[insurance]);
-
-      flash('sim-per-session', fmt(base));
-      flash('sim-monthly',     fmt(monthly));
-      flash('sim-copay',       copay === 0 ? '¥0' : fmt(copay));
-
-      document.getElementById('sim-visits-label').textContent    = VISIT_LABEL[frequency];
-      document.getElementById('sim-insurance-label').textContent = INS_LABEL[insurance];
-
-      const zeroBox = document.getElementById('sim-zero-box');
-      zeroBox.classList.toggle('hidden', insurance !== 'jibaiseki');
-
-      document.getElementById('sim-copay').style.color =
-        insurance === 'self' ? '#1a1a1a' : '#1e7d53';
-    }
-
-    document.querySelectorAll('input[name="symptom"], input[name="insurance"], input[name="frequency"]')
-      .forEach(el => el.addEventListener('change', update));
-
-    update();
-  })();
 
   // ── FAQ ──
   document.querySelectorAll('.faq-question').forEach(btn => {
